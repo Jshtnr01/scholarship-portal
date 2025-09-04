@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track Applications</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f6fa;
+      color: #333;
+    }
+
+    /* Navbar */
+    nav {
+      background: #4b0082;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+    }
+    nav .logo {
+      font-weight: bold;
+      font-size: 20px;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: 500;
+    }
+
+    /* Container */
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .title {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #4b0082;
+    }
+
+    .subtitle {
+      margin-bottom: 25px;
+      color: #666;
+    }
+
+    /* Back Button */
+    .back-btn {
+      display: inline-block;
+      margin-bottom: 20px;
+      padding: 10px 20px;
+      background: #4b0082;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .back-btn:hover {
+      background: #360062;
+    }
+
+    /* Application card */
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      color: #333;
+    }
+
+    .card small {
+      color: #777;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .status {
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 8px 0;
+    }
+
+    .pending { color: #f39c12; }
+    .approved { color: #27ae60; }
+    .denied { color: #e74c3c; }
+
+    .progress-bar {
+      background: #eee;
+      border-radius: 8px;
+      height: 10px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .progress {
+      height: 100%;
+      background: #4b0082;
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">🎓 Scholarship System</div>
+
+  </nav>
+
+  <!-- Main content -->
+  <div class="container">
+
+    <!-- Back Button -->
+    <a href="index.html" class="back-btn">⬅ Back</a>
+
+    <div class="title">📋 Track Your Applications</div>
+    <p class="subtitle">See real-time updates of your scholarship applications.</p>
+
+    <!-- Example Application -->
+    <div class="card">
+      <h3>Tulong Dunong Program</h3>
+      <small>ID: APP-001 • Date: 2025-08-01</small>
+      <div class="status pending">⏳ Pending</div>
+      <div class="progress-bar"><div class="progress" style="width:40%"></div></div>
+    </div>
+
+    <div class="card">
+      <h3>Athletic Scholarship</h3>
+      <small>ID: APP-002 • Date: 2025-07-15</small>
+      <div class="status approved">✅ Approved</div>
+      <div class="progress-bar"><div class="progress" style="width:100%"></div></div>
+    </div>
+
+    <div class="card">
+      <h3>Financial Assistance Grant</h3>
+      <small>ID: APP-003 • Date: 2025-06-20</small>
+      <div class="status denied">❌ Denied</div>
+      <div class="progress-bar"><div class="progress" style="width:100%; background:#e74c3c"></div></div>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scholarship Application Form</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f9;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        max-width: 600px;
+        margin: 40px auto;
+        background: #fff;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+      h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #4a148c;
+      }
+      label {
+        display: block;
+        margin-top: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #333;
+      }
+      input,
+      select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 6px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 14px;
+      }
+      .file-input {
+        margin-top: 8px;
+      }
+      button {
+        margin-top: 20px;
+        background: #4a148c;
+        color: white;
+        padding: 12px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        width: 100%;
+        font-size: 15px;
+        font-weight: 600;
+      }
+      button:hover {
+        background: #6a1b9a;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Scholarship Application</h2>
+      <form id="applicationForm">
+        <label>Full Name</label>
+        <input type="text" name="fullname" required />
+
+        <label>Address</label>
+        <input type="text" name="address" required />
+
+        <label>School</label>
+        <input type="text" name="school" required />
+
+        <label>Birthdate</label>
+        <input type="date" name="birthdate" required />
+
+        <label>Mother's Name</label>
+        <input type="text" name="mother_name" required />
+
+        <label>Father's Name</label>
+        <input type="text" name="father_name" required />
+
+        <label>Scholarship Name</label>
+        <input type="text" name="scholarship_name" required />
+
+        <label>Upload Grades</label>
+        <input type="file" name="grades" class="file-input" required />
+
+        <label>Upload Indigency Certificate</label>
+        <input type="file" name="indigency" class="file-input" required />
+
+        <label>Upload Good Moral Certificate</label>
+        <input type="file" name="good_moral" class="file-input" required />
+
+        <button type="submit">Submit Application</button>
+      </form>
+    </div>
+
+    <script>
+      // --- Supabase Setup ---
+      const SUPABASE_URL = "https://evhccomzwzcwtlzjkcig.supabase.co";
+      const SUPABASE_ANON_KEY =
+        "sb_publishable_plS2sbaOWEMkJmdvTYUA_g_kOSHR7Zd";
+      const supabase = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+      );
+
+      const form = document.getElementById("applicationForm");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+
+        const fullname = formData.get("fullname");
+        const address = formData.get("address");
+        const school = formData.get("school");
+        const birthdate = formData.get("birthdate");
+        const mother_name = formData.get("mother_name");
+        const father_name = formData.get("father_name");
+        const scholarship_name = formData.get("scholarship_name");
+      const { data: { user } } = await supabase.auth.getUser();
+if (!user) { alert("Please log in before submitting."); return; }
+const student_id = user.id;
+
+
+        // --- Upload function ---
+        async function uploadFile(file) {
+          if (!file) return null;
+          const filePath = `${student_id}/${Date.now()}_${file.name}`;
+
+          const { error: uploadError } = await supabase.storage
+            .from("scholarship-documents")
+            .upload(filePath, file);
+
+          if (uploadError) {
+            alert("Upload error: " + uploadError.message);
+            return null;
+          }
+
+          const { data } = supabase.storage
+            .from("scholarship-documents")
+            .getPublicUrl(filePath);
+          return data.publicUrl;
+        }
+
+        // Upload files
+        const gradesUrl = await uploadFile(formData.get("grades"));
+        const indigencyUrl = await uploadFile(formData.get("indigency"));
+        const goodMoralUrl = await uploadFile(formData.get("good_moral"));
+
+        // --- Insert into Applicants ---
+        const { error } = await supabase.from("Applicants").insert([
+          {
+            fullname,
+            address,
+            school,
+            birthdate,
+            mother_name,
+            father_name,
+            scholarship_name,
+            status: "pending",
+            document_url: JSON.stringify({
+              grades: gradesUrl,
+              indigency: indigencyUrl,
+              good_moral: goodMoralUrl,
+            }),
+          },
+        ]);
+
+        if (error) {
+          alert("Database insert error: " + error.message);
+        } else {
+          alert("✅ Application submitted successfully!");
+          form.reset();
+        }
+      });
+    </script>
+  </body>
+</html>

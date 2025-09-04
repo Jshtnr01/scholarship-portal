@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scholarship System</title>
+  <style>
+    /* Reset & Base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      background-color: #f9f9f9;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Navbar */
+    header.navbar {
+      background: #2b2b2b; /* dark gray */
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .navbar .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #adff2f; /* yellow-green */
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .nav-links li a {
+      color: #fff;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links li a:hover {
+      color: #adff2f;
+    }
+
+    .btn-nav {
+      background: #adff2f;
+      color: #2b2b2b !important;
+      padding: 0.4rem 1rem;
+      border-radius: 4px;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .btn-nav:hover {
+      background: #8fd62a;
+    }
+
+    /* Dropdown */
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 40px;
+      left: 0;
+      background: #fff;
+      color: #333;
+      padding: 1rem;
+      border-radius: 6px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 250px;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      background: url("https://images.unsplash.com/photo-1557682224-5b8590cd9ec5") no-repeat center center/cover;
+      height: 90vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: #fff;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+    }
+
+    .hero-content {
+      position: relative;
+      max-width: 700px;
+      padding: 2rem;
+      z-index: 2;
+    }
+
+    .hero-content h1 {
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero-content p {
+      margin-bottom: 1.5rem;
+      font-size: 1.2rem;
+      color: #ddd;
+    }
+
+    .apply-btn {
+      background: #adff2f;
+      color: #2b2b2b;
+      padding: 0.8rem 2rem;
+      font-size: 1.1rem;
+      border-radius: 6px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .apply-btn:hover {
+      background: #8fd62a;
+    }
+
+    /* Features */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      padding: 4rem 2rem;
+      background: #fff;
+    }
+
+    .feature {
+      background: #f1f1f1;
+      padding: 2rem;
+      border-radius: 12px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .feature:hover {
+      transform: translateY(-5px);
+    }
+
+    .feature .icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #adff2f;
+    }
+
+    .feature h3 {
+      margin-bottom: 0.8rem;
+      color: #2b2b2b;
+    }
+
+    /* CTA */
+    .cta {
+      text-align: center;
+      padding: 3rem 2rem;
+      background: #2b2b2b;
+      color: #fff;
+    }
+
+    .cta h2 {
+      margin-bottom: 1rem;
+      font-size: 2rem;
+    }
+
+    .btn-cta {
+      display: inline-block;
+      margin-top: 1rem;
+      background: #adff2f;
+      color: #2b2b2b;
+      padding: 0.8rem 1.8rem;
+      font-size: 1rem;
+      border-radius: 6px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .btn-cta:hover {
+      background: #8fd62a;
+    }
+
+    /* Footer */
+    .footer {
+      background: #6E6E6E;
+      color: #bbb;
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    .footer p {
+      margin: 0;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="navbar">
+    <div class="logo">🎓 Scholarship System</div>
+    <nav>
+      <ul class="nav-links">
+        <li id="about-link"><a href="about.html">About</a></li>
+        <li id="scholarship-link"><a href="scholarship.html">Scholarship</a></li>
+        <li id="track-link"><a href="track.html">Track</a></li>
+        <li id="login-link"><a href="login.html">Log In</a></li>
+        <li id="signup-link"><a href="sign-up.html" class="btn-nav">Sign Up</a></li>
+        <li id="logout-link" style="display: none;">
+          <a href="login.html" onclick="logout()">Log Out</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="overlay"></div>
+    <div class="hero-content">
+      <h1>Web-Based Scholarship <br> Application & Monitoring System</h1>
+      <p>Apply, track, and secure your future with just a few clicks.</p>
+      <a href="scholarship.html" class="apply-btn" onclick="handleApply()">Apply Now</a>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta">
+    <h2>🎯 Ready to start your journey?</h2>
+    <p>Create an account and apply for your scholarship today.</p>
+    <a href="sign-up.html" class="btn-cta">Sign Up Free</a>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2025 Scholarship System | President Ramon Magsaysay State University</p>
+  </footer>
+
+<script>
+  function handleApply() {
+    if (localStorage.getItem("loggedIn") === "true") {
+      window.location.href = "scholarship.html";
+    } else {
+      alert("You must log in first before applying.");
+      window.location.href = "login.html";
+    }
+  }
+
+  function logout() {
+    localStorage.removeItem("loggedIn");
+    alert("You have logged out.");
+    location.reload();
+  }
+
+  window.onload = function () {
+    let loggedIn = localStorage.getItem("loggedIn");
+    let trackLink = document.getElementById("track-link");
+    let loginLink = document.getElementById("login-link");
+    let signupLink = document.getElementById("signup-link");
+    let logoutLink = document.getElementById("logout-link");
+
+    if (loggedIn === "true") {
+      trackLink.style.display = "inline-block";
+      loginLink.style.display = "none";
+      signupLink.style.display = "none";
+      logoutLink.style.display = "inline-block";
+    } else {
+      trackLink.style.display = "none";
+      loginLink.style.display = "inline-block";
+      signupLink.style.display = "inline-block";
+      logoutLink.style.display = "none";
+    }
+  }
+</script>
+
+</body>
+</html>
